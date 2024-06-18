@@ -11,3 +11,6 @@ Parses and compares the NetworkList Registry Key and its subkeys (Signature &amp
 - DefaultGatewayMac (BSSID) 
 
 Huge thanks to those that helped!
+
+# Usage
+In an elevated powershell command prompt: `.\WifiParser.ps1`
