@@ -1,5 +1,13 @@
 # Network-Registry-Parser
-Parses and compares Signature &amp; Unmanaged registry keys to parse key data out of.  Such as: Date/Timegroups, Gateway Mac, and SSIDs. 
+Parses and compares the NetworkList Registry Key and its subkeys (Signature &amp; Profiles). Retrieves the following data from a Windows Host: 
 
+- Description (or Network Name)
+- DateCreated
+- DateLastConnected
+- PSPath (the Registry Path of the Key- useful for GUID identification)
+- ProfileGuid (Same as above just not within the full path)
+- Source
+- DnsSuffix
+- DefaultGatewayMac (BSSID) 
 
 Huge thanks to those that helped!
