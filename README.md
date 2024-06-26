@@ -1,4 +1,4 @@
-# Network-Registry-Parser
+# Wifi-Registry-Parser
 Parses and compares the NetworkList Registry Key and its subkeys (Signature &amp; Profiles). Retrieves the following data from a Windows Host: 
 
 - Description (or Network Name)
