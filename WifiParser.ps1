@@ -1,4 +1,4 @@
-﻿Function convert-date($x){
+Function convert-date($x){
     try{
         $Count = 0
         $string = $null
@@ -66,6 +66,12 @@
         return "Error"
     }    
 }
+
+function Show-Usage {
+    Write-Host "To Export Results: .\WifiParser.ps1 -o <Output Path and Filename>"
+    }
+
+
 $Profiles = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\*"  | Select-Object Description, DateCreated, DateLastConnected, PSPath
 $Signatures = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged\*" | Select-Object ProfileGuid, Source, DnsSuffix, DefaultGatewayMac
 $mergedTable = @()
@@ -86,10 +92,19 @@ foreach ($row1 in $Profiles) {
         }
     }
 }
+
 Foreach ($nic in $mergedTable){
     $nic.GatewayMac = $nic.GatewayMac -join ":"
     $nic.DateCreated = convert-date $($nic.DateCreated)
     $nic.DateLast = convert-date $($nic.DateLast)
     $mergedTable += $nic
 }
-$mergedTable | Format-Table
+
+$x = "-o"
+if ($args -contains $x ) {
+    $mergedTable | Export-Csv -Path $args[1] -NoTypeInformation
+    }
+else {
+    Show-Usage
+    $mergedTable | Format-Table
+    }
