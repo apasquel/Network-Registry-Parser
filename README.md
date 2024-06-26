@@ -13,4 +13,6 @@ Parses and compares the NetworkList Registry Key and its subkeys (Signature &amp
 Huge thanks to those that helped!
 
 # Usage
-In an elevated powershell command prompt: `.\WifiParser.ps1`
+In an elevated powershell command prompt: `.\WifiParser.ps1` 
+
+To export to csv `.\WifiParser.ps1 -o <.\Path\2\WifiData.csv>` 
