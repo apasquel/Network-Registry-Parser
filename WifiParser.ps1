@@ -1,3 +1,4 @@
+#SYSTEMTIME Conversion Function
 Function convert-date($x){
     try{
         $Count = 0
@@ -71,10 +72,12 @@ function Show-Usage {
     Write-Host "To Export Results: .\WifiParser.ps1 -o <Output Path and Filename>"
     }
 
-
+#Collecting both main registry keys
 $Profiles = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\*"  | Select-Object Description, DateCreated, DateLastConnected, PSPath
 $Signatures = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged\*" | Select-Object ProfileGuid, Source, DnsSuffix, DefaultGatewayMac
 $mergedTable = @()
+
+#Merge both keys and match based off of GUIDs
 foreach ($row1 in $Profiles) {
     foreach ($row2 in $Signatures) {
         if ($row1.PSPath -split '\\' -contains  $row2.ProfileGuid) {
@@ -93,6 +96,7 @@ foreach ($row1 in $Profiles) {
     }
 }
 
+#Sub Arrays into their proper format
 Foreach ($nic in $mergedTable){
     $nic.GatewayMac = $nic.GatewayMac -join ":"
     $nic.DateCreated = convert-date $($nic.DateCreated)
@@ -100,6 +104,7 @@ Foreach ($nic in $mergedTable){
     $mergedTable += $nic
 }
 
+#Command Line Arguments
 $x = "-o"
 if ($args -contains $x ) {
     $mergedTable | Export-Csv -Path $args[1] -NoTypeInformation
